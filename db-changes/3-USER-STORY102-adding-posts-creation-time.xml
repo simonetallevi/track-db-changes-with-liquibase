@@ -8,10 +8,10 @@
 
     <changeSet author="simone.tallevi" id="3-USER-STORY102-adding-posts-creation-time">
         <sql>
-            ALTER TABLE table_name ADD COLUMN created_at DATETIME;
+            ALTER TABLE users ADD COLUMN created_at DATETIME;
         </sql>
         <rollback>
-            ALTER TABLE table_name DROP COLUMN created_at;
+            ALTER TABLE users DROP COLUMN created_at;
         </rollback>
     </changeSet>
 </databaseChangeLog>

@@ -26,7 +26,7 @@ mysql -h localhost -u root -p
 
 4 Create your schema
 ```
-CREATE SCHEMA liquibase DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA TRY2CATCHIT DEFAULT CHARACTER SET utf8;
 ```
 
 4 Exit from the container
@@ -34,12 +34,56 @@ CREATE SCHEMA liquibase DEFAULT CHARACTER SET utf8;
 exit
 ```
 
-## Run migrations
+## Configure Liquibase 
 
-Below you can find some of most used command.
-For more information have a look [HERE](https://www.liquibase.org/)
+Install Liquibase by following these instructions [HERE](https://www.liquibase.org/get-started/first-steps).
 
-1 Liquibase update
+Test your the Liquibase installation with the following command:
+
+```
+liquibase --version
+```
+
+expected output:
+
+```
+Starting Liquibase at Thu, 25 Jun 2020 00:31:01 CEST (version 3.10.0 #10 built at Thu Jun 11 09:47:49 UTC 2020)
+Liquibase Version: 3.10.0
+Liquibase Community 3.10.0 by Datical
+Running Java under /Library/Java/JavaVirtualMachines/jdk-11.0.4.jdk/Contents/Home (Version 11.0.4)
+```
+
+Configure Liquibase properties in the ``liquibase.properties`` file. 
+The file needs to be place in the path from where you will run the Liquibase migrations.
+
+```
+driver=<DRIVER>
+classpath=<DRIVER-JAR>
+url=jdbc:mysql://<HOST>:<PORT>/<SCHEMA>?useSSL=false&nullNamePatternMatchesAll=true&serverTimezone=UTC
+username=<USER>
+password=<PASSWORD>
+changeLogFile=db-changes-master.xml
+logLevel=info
+```
+
+Below an example
+
+```
+driver=com.mysql.cj.jdbc.Driver
+classpath=mysql-connector-java-8.0.19.jar
+url=jdbc:mysql://localhost:3306/TRY2CATCHIT?useSSL=false&nullNamePatternMatchesAll=true&serverTimezone=UTC
+username=root
+password=password
+changeLogFile=db-changes-master.xml
+logLevel=info
+```
+
+## Run the migrations
+
+Below are some of the most used commands,
+however for more information have a look at the full documentation [HERE](https://www.liquibase.org/)
+
+### 1 Start the migrations
 ```
 
 ```

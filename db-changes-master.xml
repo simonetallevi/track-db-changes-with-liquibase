@@ -3,7 +3,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
 
-    <include file='db-changes/1-USER-STORY100-hello.xml' relativeToChangelogFile='true'/>
+    <include file='db-changes/1-USER-STORY100-users.xml' relativeToChangelogFile='true'/>
     <include file='db-changes/2-USER-STORY101-posts.xml' relativeToChangelogFile='true'/>
     <include file='db-changes/3-USER-STORY102-adding-posts-creation-time.xml' relativeToChangelogFile='true'/>
 
