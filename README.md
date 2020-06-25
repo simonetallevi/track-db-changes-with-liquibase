@@ -53,8 +53,11 @@ Liquibase Community 3.10.0 by Datical
 Running Java under /Library/Java/JavaVirtualMachines/jdk-11.0.4.jdk/Contents/Home (Version 11.0.4)
 ```
 
-Configure Liquibase properties in the ``liquibase.properties`` file. 
-The file needs to be place in the path from where you will run the Liquibase migrations.
+Download your MySql 8 jdbc Driver from [HERE](https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar) 
+and place it in the root folder of the project.
+
+Configure Liquibase properties in the ``liquibase.properties`` 
+file and place it in the root of the project.
 
 ```
 driver=<DRIVER>
@@ -85,9 +88,14 @@ however for more information have a look at the full documentation [HERE](https:
 
 ### 1 Start the migrations
 ```
-
+liquibase update
 ```
 
-2 liquibase rollback
+### 2 Rollback a migration
 ```
+liquibase rollbackCount 1
 ```
+
+### 3 Environment dependent migration
+
+### 4 Star using Liquibase on existing databases
