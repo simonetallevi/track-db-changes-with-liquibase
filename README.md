@@ -1,6 +1,8 @@
 # Track DB Changes With Liquibase
 
-## Setup
+## Setup your DB Schema
+
+If you already have a MySql DB installed in your machine you can skip di steps
 
 1 Start your mysql database instances:
 
@@ -9,7 +11,7 @@
 docker run -p 3306:3306 --name mysql_80 -e MYSQL_ROOT_PASSWORD=password -d mysql:8
 ```
 
-- If you already have run the previous command and yiu want to re-run the stopped container
+If you already have run the previous command and yiu want to re-run the stopped container
 ```
 docker start mysql_80
 ```
@@ -32,6 +34,13 @@ CREATE SCHEMA TRY2CATCHIT DEFAULT CHARACTER SET utf8;
 4 Exit from the container
 ```
 exit
+```
+
+## Start your Docket instance of MySql
+If you already have run the command to create the docker instance of MySql, 
+you can just run the following command to run the previous created instance.
+```
+docker start mysql_80
 ```
 
 ## Configure Liquibase 
@@ -83,19 +92,68 @@ logLevel=info
 
 ## Run the migrations
 
+At this point we should have the schema `TRY2CATCHIT` created and Liquibase installed and configured.
+
 Below are some of the most used commands,
 however for more information have a look at the full documentation [HERE](https://www.liquibase.org/)
 
 ### 1 Start the migrations
+
+To run all the migration listed in the files `db-changes-master.xml` 
+
+```
+<include file='db-changes/1-USER-STORY100-users.xml' relativeToChangelogFile='true'/>
+<include file='db-changes/2-USER-STORY101-posts.xml' relativeToChangelogFile='true'/>
+<include file='db-changes/3-USER-STORY102-adding-users-creation-time.xml' relativeToChangelogFile='true'/>
+```
+
+You can run the following command:
 ```
 liquibase update
 ```
 
+This is what happened in the DB Schema `TRY2CATCHIT`:
+
+![image info](./docs/tables.png)
+
+The tables `posts` and `users` were created together with the tables 
+`DATABASECHANGELOG` and `DATABASECHANGELOGLOCK`.
+
+The tables `DATABASECHANGELOG` and `DATABASECHANGELOGLOCK` are Liquibase table 
+responsible for:
+ - `DATABASECHANGELOG` is keeping track of all changes applied to the DB.
+ - `DATABASECHANGELOGLOCK` is locking the `DATABASECHANGELOG` while a migration is running, 
+ to avoid multiple simultaneous migrations.
+
+After the liquibase migration, your `DATABASECHANGELOG` will look like this one below
+![DATABASECHANGELOG](./docs/changelogs.png) 
+
+Now let's have a look at the `users` and `posts` tables.
+ 
+The `users` table matches the initial create
+![users](./docs/users.png) 
+
+The `posts` tables instead doesn't match the initial create because of the third migration.  
+So the `posts` tables is in the following status:
+
+![posts](./docs/posts.png) 
+
 ### 2 Rollback a migration
+
+If we need to rollback a migration we can run the command below. 
+The rollback will undo the last migration applied on the `DATABASECHANGELOG` table
+and it will restore the DB schema at the previous state.
+
 ```
 liquibase rollbackCount 1
 ```
+After the liquibase rollback, your `DATABASECHANGELOG` will look like this one below
+![DATABASECHANGELOG](./docs/changelogs-rollback.png) 
+
+The `posts` tables will look like this
+![posts](./docs/posts-rollback.png) 
 
 ### 3 Environment dependent migration
+
 
 ### 4 Star using Liquibase on existing databases
