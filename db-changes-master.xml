@@ -6,5 +6,6 @@
     <include file='db-changes/1-USER-STORY100-users.xml' relativeToChangelogFile='true'/>
     <include file='db-changes/2-USER-STORY101-posts.xml' relativeToChangelogFile='true'/>
     <include file='db-changes/3-USER-STORY102-adding-posts-creation-time.xml' relativeToChangelogFile='true'/>
+    <include file='db-changes/4-USER-STORY103-test-data.xml' relativeToChangelogFile='true'/>
 
 </databaseChangeLog>

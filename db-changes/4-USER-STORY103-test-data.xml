@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                      http://www.liquibase.org/xml/ns/dbchangelog-ext
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="simone.tallevi" id="4-USER-STORY103-environment-dependent" context="test">
+        <sql>
+            INSERT INTO `users` (`name`, `surname`, `username`, `email`)
+            VALUES ('Simone', 'Tallevi', 'simone.tallevi', 'simone.tallevi@gmail.com');
+            INSERT INTO `users` (`name`, `surname`, `username`, `email`)
+            VALUES ('Paolo', 'Rossi', 'paolo.rossi', 'paolo.rossi@gmail.com');
+            INSERT INTO `users` (`name`, `surname`, `username`, `email`)
+            VALUES ('Mario', 'Bianchi', 'mario.binachi', 'mario.bianchi@gmail.com');
+        </sql>
+        <rollback>
+            DELETE FROM `users` WHERE `username` IN ('simone.tallevi', 'paolo.rossi', 'mario.binachi')
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

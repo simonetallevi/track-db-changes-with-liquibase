@@ -154,6 +154,33 @@ The `posts` tables will look like this
 ![posts](./docs/posts-rollback.png) 
 
 ### 3 Environment dependent migration
+If you want to run different migrations for different environment you can use the `context` 
+option like in the example below. The `context` provided in the input command need to match the context specified in the liquibase 
+migration.
 
+Below an example of migration with the specified context `context="test"`
+```
+<changeSet author="simone.tallevi" id="4-USER-STORY103-environment-dependent" context="test">
+    <sql>
+        INSERT INTO `users` (`name`, `surname`, `username`, `email`)
+        VALUES ('Simone', 'Tallevi', 'simone.tallevi', 'simone.tallevi@gmail.com');
+        INSERT INTO `users` (`name`, `surname`, `username`, `email`)
+        VALUES ('Paolo', 'Rossi', 'paolo.rossi', 'paolo.rossi@gmail.com');
+        INSERT INTO `users` (`name`, `surname`, `username`, `email`)
+        VALUES ('Mario', 'Bianchi', 'mario.binachi', 'mario.bianchi@gmail.com');
+    </sql>
+    <rollback>
+        DELETE FROM `users` WHERE `username` IN ('simone.tallevi', 'paolo.rossi', 'mario.binachi')
+    </rollback>
+</changeSet>
+```
 
-### 4 Star using Liquibase on existing databases
+By running this command 
+
+```
+liquibase update -Dcontext=test
+```
+
+The `users` table will be loaded with test data
+
+![users-data](./docs/users-data.png) 
